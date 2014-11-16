@@ -1,0 +1,48 @@
+FileCell
+ id
+ columnId
+ rowId
+ originalValue
+ filterId
+ value
+ 
+Filter
+ id
+ filterDefinitionId
+ 
+FilterAttribute
+ id
+ filterAttributeDefinitionId
+ filterId
+ value
+ 
+Column
+ id
+ fileId
+ columnNumber
+ name
+ defaultFilterId
+ 
+Row
+ id
+ fileId
+ rowNumber
+ skipInOutput
+ 
+File
+ id
+ name
+ uploadDate
+ hasHeaderRow
+ startingColumns
+ startingRows
+ 
+FilterDefinition
+ id
+ name
+ 
+FilterAttributeDefinition
+ id
+ filterId
+ name
+ dataType
