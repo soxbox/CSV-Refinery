@@ -7,6 +7,7 @@
     <li>Original Row Count: {{ file.originalRowCount }}</li>
     <li>Original Column Count: {{ file.originalColumnCount }}</li>
 </ul>
+<p>{{ link_to("datacleaning/index/" ~ file.id, "Clean Data") }}</p>
 
 <h2>Rows</h2>
 <table>
@@ -65,5 +66,5 @@
 </table>
 
 <p>
-    {{  link_to("files", "All Files") }}
+    {{  link_to("csvfiles", "All Files") }}
 </p>

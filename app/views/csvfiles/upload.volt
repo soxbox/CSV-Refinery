@@ -7,7 +7,7 @@
     </ul>
 {% else %}
     <h1>Upload File</h1>
-    {{ form('files/upload', 'class': 'form-inline', 'method': 'post', 'enctype': 'multipart/form-data') }}
+    {{ form('csvfiles/upload', 'class': 'form-inline', 'method': 'post', 'enctype': 'multipart/form-data') }}
     <span>
         {{ file_field('fileToUpload') }}
         {{ submit_button('Upload') }}
@@ -16,5 +16,5 @@
 {% endif %}
 
 <p>
-    {{  link_to("files", "Go Back") }}
+    {{  link_to("csvfiles", "Go Back") }}
 </p>

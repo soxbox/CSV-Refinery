@@ -1,6 +1,6 @@
 <?php
 
-class FilesController extends ControllerBase
+class CsvFilesController extends ControllerBase
 {
 
     public function indexAction()
@@ -18,10 +18,11 @@ class FilesController extends ControllerBase
 
             }
             else {
-                return $this->dispatcher->forward(array(
-                    'action' => 'view',
-                    'params' => array($file->id)
-                ));
+                $this->view->disable();
+
+                // Getting a response instance
+                $response = new \Phalcon\Http\Response();
+                return $response->redirect("csvfiles/view/" . $file->id);
             }
         }
     }

@@ -78,3 +78,17 @@ $di->set('session', function () {
 
     return $session;
 });
+
+/*// Create the router
+$router = new \Phalcon\Mvc\Router();
+
+//Define a route
+$router->add(
+    "/datacleaning/:int/:action/:int",
+    array(
+        "controller" => "DataCleaning",
+        "action"     => 2,
+        "fileId"     => 1,
+        "columnId"     => 3,
+    )
+);*/

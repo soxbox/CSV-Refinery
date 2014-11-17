@@ -2,4 +2,4 @@
 
 <p>You're now flying with Phalcon. Great things are about to happen!</p>
 
-{{  link_to("files", "Files") }}
+{{  link_to("csvfiles", "Files") }}

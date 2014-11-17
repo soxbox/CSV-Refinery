@@ -1,7 +1,7 @@
 <h1>Files</h1>
 
 <p>
-{{  link_to("files/upload", "Upload New File") }}
+{{  link_to("csvfiles/upload", "Upload New File") }}
 </p>
 
 <table>
@@ -16,11 +16,11 @@
     {% for file in files %}
         <tr>
             <td>{{ file.id }}</td>
-            <td>{{ link_to("files/view/" ~ file.id, file.name) }}</td>
+            <td>{{ link_to("csvfiles/view/" ~ file.id, file.name) }}</td>
             <td>{{ file.uploadDate }}</td>
             <td>{{ file.originalColumnCount }}</td>
             <td>{{ file.originalRowCount }}</td>
-            <td>{{ link_to("files/export", "Export") }}</td>
+            <td>{{ link_to("csvfiles/export", "Export") }}</td>
         </tr>
     {% endfor %}
 </table>
