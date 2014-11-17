@@ -3,7 +3,12 @@
     <li>Id: {{ file.id }}</li>
     <li>Name: {{ file.name }}</li>
     <li>Uploaded: {{ file.uploadDate }}</li>
-    <li>Has Header Row: {{ file.hasHeaderRow ? 'true' : 'false' }}</li>
+    <li>
+        Has Header Row: {{ file.hasHeaderRow ? 'true' : 'false' }}
+        {{ form('csvfiles/toggleHeaderRow/' ~ file.id, 'method': 'post') }}
+            {{ submit_button(file.hasHeaderRow ? 'Remove Header Row' : 'Use Fisrt Row as Header') }}
+        </form>
+    </li>
     <li>Original Row Count: {{ file.originalRowCount }}</li>
     <li>Original Column Count: {{ file.originalColumnCount }}</li>
 </ul>

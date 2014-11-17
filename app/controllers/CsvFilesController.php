@@ -27,10 +27,84 @@ class CsvFilesController extends ControllerBase
         }
     }
 
+    public function toggleHeaderRowAction($fileId)
+    {
+        $file = File::findFirstById($fileId);
+        $file->hasHeaderRow = !$file->hasHeaderRow;
+        $file->save();
+        $firstRow = FileRow::findFirst(
+            array(
+                '(rowNumber = 1) AND (fileId = :fileId:)',
+                'bind' => array('fileId' => $fileId)
+            )
+        );
+        $firstRow->isHeaderRow = $file->hasHeaderRow;
+        $firstRow->save();
+        if ($file->hasHeaderRow)
+        {
+            foreach ($file->columns as $column)
+            {
+                $correspondingFirstRowCell = FileCell::findFirst(
+                    array(
+                        '(fileColumnId = :fileColumnId:) AND (fileRowId = :fileRowId:)',
+                        'bind' => array('fileColumnId' => $column->id, 'fileRowId' => $firstRow->id)
+                    )
+                );
+                $column->originalName = $correspondingFirstRowCell->originalValue;
+                $column->save();
+            }
+        }
+        else
+        {
+            foreach ($file->columns as $column)
+            {
+                $column->originalName = "Column " . $column->columnNumber;
+                $column->save();
+            }
+        }
+
+
+        $this->view->disable();
+
+        // Getting a response instance
+        $response = new \Phalcon\Http\Response();
+        return $response->redirect("csvfiles/view/" . $file->id);
+
+
+//        if ($row->save() == false)
+//        {
+//            $this->appendErrorMessages($row);
+//        }
+    }
+
     public function viewAction($fileId)
     {
         $file = File::findFirstById($fileId);
         $this->view->file = $file;
+    }
+
+    public function deleteAction($fileId)
+    {
+        $file = File::findFirstById($fileId);
+        if ($file != false) {
+            foreach ($file->cells as $cell)
+            {
+                $cell->delete();
+            }
+            foreach ($file->columns as $column)
+            {
+                $column->delete();
+            }
+            foreach ($file->rows as $row)
+            {
+                $row->delete();
+            }
+            $file->delete();
+        }
+
+        $this->view->disable();
+        $response = new \Phalcon\Http\Response();
+        return $response->redirect("csvfiles/index/");
     }
 
     private function saveUploadedFile()
@@ -56,6 +130,7 @@ class CsvFilesController extends ControllerBase
                             $column = new FileColumn();
                             $column->file = $file;
                             $column->columnNumber = $c + 1;
+                            $column->originalName = "Column " . $column->columnNumber;
                             array_push($columns, $column);
                         }
 

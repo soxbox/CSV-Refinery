@@ -1,5 +1,7 @@
 <?php
 
+use Phalcon\Mvc\Model\Relation;
+
 class FileRow extends ModelBase
 {
 
@@ -52,7 +54,10 @@ class FileRow extends ModelBase
     {
         $this->setSource('FileRow');
         $this->hasMany('id', "FileCell", "fileRowId", array(
-            'alias' => 'Cells'
+            'alias' => 'Cells',
+            'foreignKey' => array(
+                'action' => Relation::ACTION_CASCADE
+            )
         ));
         $this->belongsTo('fileId', "File", "id", array(
             'alias' => 'File'

@@ -21,6 +21,18 @@
             <td>{{ file.originalColumnCount }}</td>
             <td>{{ file.originalRowCount }}</td>
             <td>{{ link_to("csvfiles/export", "Export") }}</td>
+            <td>
+                {{ form('csvfiles/delete/' ~ file.id, 'method': 'post') }}
+                {{ submit_button('Delete', "onclick":"return ConfirmDelete()") }}
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>
+
+<script type="text/javascript">
+    function ConfirmDelete()
+    {
+        return confirm("Are you sure you want to delete?");
+    }
+</script>
