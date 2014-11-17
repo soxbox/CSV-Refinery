@@ -1,7 +1,7 @@
 {% if (not(previousColumnId is empty)) %}
     {{ link_to("datacleaning/cleancolumn/" ~ previousColumnId, "Previous") }}
 {% endif %}
-<h1>Column # {{ column.columnNumber }} - <span>{{ column.name }}</span></h1>
+<h1>Column # {{ column.columnNumber }} - "<span>{{ not(column.name is empty) ? column.name : column.originalName }}</span>"</h1>
 {% if (not(nextColumnId is empty)) %}
     {{ link_to("datacleaning/cleancolumn/" ~ nextColumnId, "Next") }}
 {% endif %}
