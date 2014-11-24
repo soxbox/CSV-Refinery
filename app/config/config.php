@@ -6,7 +6,7 @@ return new \Phalcon\Config(array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'dataimports',
+        'dbname'      => 'csvrefinery',
     ),
     'application' => array(
         'controllersDir' => __DIR__ . '/../../app/controllers/',

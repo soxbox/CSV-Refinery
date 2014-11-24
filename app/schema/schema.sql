@@ -41,6 +41,7 @@ CREATE TABLE `FileColumn` (
   `columnNumber` int unsigned NOT NULL,
   `originalName` varchar(128),
   `name` varchar(128),
+  `filter` varchar(128),
   PRIMARY KEY (`id`),
   FOREIGN KEY (fileId) REFERENCES File(id)
 );
@@ -52,6 +53,8 @@ CREATE TABLE `FileCell` (
   `fileRowId` int unsigned NOT NULL,
   `originalValue` text,
   `value` text,
+  `isCleaned` BOOL,
+  `isValid` BOOL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (fileId) REFERENCES File(id),
   FOREIGN KEY (fileColumnId) REFERENCES FileColumn(id),

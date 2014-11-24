@@ -152,6 +152,8 @@ class CsvFilesController extends ControllerBase
                             $cell = new FileCell();
                             $cell->file = $file;
                             $cell->originalValue = $data[$c];
+                            $cell->isCleaned = false;
+                            $cell->isValid = false;
                             $cell->row = $row;
                             $cell->column = $columns[$c];
                             array_push($cells, $cell);

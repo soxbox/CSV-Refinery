@@ -40,6 +40,30 @@ class FileCell extends ModelBase
     public $value;
 
     /**
+     *
+     * @var integer
+     */
+    public $isCleaned;
+
+    /**
+     *
+     * @var integer
+     */
+    public $isValid;
+
+    public function beforeSave()
+    {
+        $this->isCleaned = ($this->isCleaned == true) ? 1 : 0;
+        $this->isValid = ($this->isValid == true) ? 1 : 0;
+    }
+
+    public function afterFetch()
+    {
+        $this->isCleaned = ($this->isCleaned == 1) ? true : false;
+        $this->isValid = ($this->isValid == 1) ? true : false;
+    }
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -66,7 +90,9 @@ class FileCell extends ModelBase
             'fileId' => 'fileId',
             'fileColumnId' => 'fileColumnId', 
             'fileRowId' => 'fileRowId',
-            'originalValue' => 'originalValue', 
+            'isCleaned' => 'isCleaned',
+            'originalValue' => 'originalValue',
+            'isValid' => 'isValid',
             'value' => 'value'
         );
     }

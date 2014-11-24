@@ -36,6 +36,12 @@ class FileColumn extends ModelBase
     public $name;
 
     /**
+     *
+     * @var string
+     */
+    public $filter;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -61,7 +67,8 @@ class FileColumn extends ModelBase
             'id' => 'id', 
             'fileId' => 'fileId', 
             'columnNumber' => 'columnNumber', 
-            'originalName' => 'originalName', 
+            'originalName' => 'originalName',
+            'filter' => 'filter',
             'name' => 'name'
         );
     }

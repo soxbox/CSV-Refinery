@@ -16,10 +16,53 @@ class DataCleaningController extends ControllerBase
 
         // Getting a response instance
         $response = new \Phalcon\Http\Response();
-        return $response->redirect("datacleaning/cleancolumn/" . $firstColumn->id);
+        return $response->redirect("datacleaning/column/" . $firstColumn->id);
     }
 
-    public function cleanColumnAction($columnId)
+    public function columnAction($columnId)
+    {
+        $columnToClean = $this->getColumnData($columnId);
+
+        $this->view->columnToClean = $columnToClean;
+    }
+
+    public function setFilterAction($columnId, $filterName)
+    {
+        $column = FileColumn::findFirstById($columnId);
+        $column->filter = $filterName;
+        $column->save();
+        foreach ($column->cells as $cell)
+        {
+            $cell->value = null;
+            $cell->isCleaned = false;
+            $cell->isValid = false;
+            $cell->save();
+        }
+
+        $this->view->disable();
+
+        // Getting a response instance
+        $response = new \Phalcon\Http\Response();
+        return $response->redirect("datacleaning/column/" . $columnId);
+    }
+
+    public function applyFilterAction($columnId)
+    {
+        $column = FileColumn::findFirstById($columnId);
+        foreach ($column->cells as $cell)
+        {
+            $this->applyFilterToCell($cell);
+            $cell->save();
+        }
+
+        $this->view->disable();
+
+        // Getting a response instance
+        $response = new \Phalcon\Http\Response();
+        return $response->redirect("datacleaning/column/" . $columnId);
+    }
+
+    private function getColumnData($columnId)
     {
         $column = FileColumn::findFirstById($columnId);
         $previousColumnId = null;
@@ -45,11 +88,50 @@ class DataCleaningController extends ControllerBase
             $nextColumnId = $nextColumn->id;
         }
 
-        $this->view->column = $column;
-        $this->view->previousColumnId = $previousColumnId;
-        $this->view->nextColumnId = $nextColumnId;
+        $columnToClean = new ColumnToClean();
+        $columnToClean->column = $column;
+        $columnToClean->previousColumnId = $previousColumnId;
+        $columnToClean->nextColumnId = $nextColumnId;
+
+        return $columnToClean;
     }
 
+    private function applyFilterToCell($cell)
+    {
+        if (is_null($cell->column->filter)) {
+            $cell->value = $cell->originalValue;
+            $cell->isCleaned = false;
+            $cell->isValid = false;
+        }
+        else if ($cell->column->filter == "Phone Number")
+        {
+
+        }
+        else if ($cell->column->filter == "Name- 1 Word")
+        {
+
+        }
+        else if ($cell->column->filter == "Address Line")
+        {
+
+        }
+        else if ($cell->column->filter == "State- 2 Character Code")
+        {
+
+        }
+        else if ($cell->column->filter == "City")
+        {
+
+        }
+        else if ($cell->column->filter == "Zip Code")
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 
 }
 
