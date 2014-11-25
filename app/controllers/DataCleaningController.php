@@ -22,37 +22,21 @@ class DataCleaningController extends ControllerBase
     public function columnAction($columnId)
     {
         $columnToClean = $this->getColumnData($columnId);
+        $filters = Filter::find();
 
         $this->view->columnToClean = $columnToClean;
-    }
-
-    public function setFilterAction($columnId, $filterName)
-    {
-        $column = FileColumn::findFirstById($columnId);
-        $column->filter = $filterName;
-        $column->save();
-        foreach ($column->cells as $cell)
-        {
-            $cell->value = null;
-            $cell->isCleaned = false;
-            $cell->isValid = false;
-            $cell->save();
-        }
-
-        $this->view->disable();
-
-        // Getting a response instance
-        $response = new \Phalcon\Http\Response();
-        return $response->redirect("datacleaning/column/" . $columnId);
+        $this->view->filters = $filters;
     }
 
     public function applyFilterAction($columnId)
     {
+        $filterId = intval($this->request->getPost("filterId"));
         $column = FileColumn::findFirstById($columnId);
+        $column->filterId = $filterId > 0 ? $filterId : null;
+        $column->save();
         foreach ($column->cells as $cell)
         {
             $this->applyFilterToCell($cell);
-            $cell->save();
         }
 
         $this->view->disable();
@@ -98,39 +82,35 @@ class DataCleaningController extends ControllerBase
 
     private function applyFilterToCell($cell)
     {
-        if (is_null($cell->column->filter)) {
+        $cell->isCleaned = true;
+        $cell->isValid = true;
+        if (is_null($cell->column->filterId))
+        {
             $cell->value = $cell->originalValue;
-            $cell->isCleaned = false;
-            $cell->isValid = false;
+            $cell->isCleaned = true;
+            $cell->isValid = true;
         }
-        else if ($cell->column->filter == "Phone Number")
-        {
+        else {
+            if ($cell->column->filterId == Filter::ADDRESS_LINE_FILTER_ID) {
+                $cell->value = "ADDRESS LINE FILTER LOGIC NOT YET IMPLEMENTED";
+            } else if ($cell->column->filterId == Filter::FULL_NAME_FILTER_ID) {
+                $cell->value = "FULL NAME FILTER LOGIC NOT YET IMPLEMENTED";
+            } else if ($cell->column->filterId == Filter::NAME_FILTER_ID) {
+                $cell->value = "NAME FILTER LOGIC NOT YET IMPLEMENTED";
+            } else if ($cell->column->filterId == Filter::PHONE_NUMBER_FILTER_ID) {
+                $cell->value = "PHONE NUMBER FILTER LOGIC NOT YET IMPLEMENTED";
+            } else if ($cell->column->filterId == Filter::POSTAL_CODE_FILTER_ID) {
+                $cell->value = "POSTAL CODE FILTER LOGIC NOT YET IMPLEMENTED";
+            } else if ($cell->column->filterId == Filter::STATE_ABBREVIATION_FILTER_ID) {
+                $cell->value = "STATE ABBREVIATION FILTER LOGIC NOT YET IMPLEMENTED";
+            } else {
+                $cell->value = "FILTER NOT FOUND";
+                $cell->isCleaned = false;
+                $cell->isValid = false;
+            }
+        }
 
-        }
-        else if ($cell->column->filter == "Name- 1 Word")
-        {
-
-        }
-        else if ($cell->column->filter == "Address Line")
-        {
-
-        }
-        else if ($cell->column->filter == "State- 2 Character Code")
-        {
-
-        }
-        else if ($cell->column->filter == "City")
-        {
-
-        }
-        else if ($cell->column->filter == "Zip Code")
-        {
-
-        }
-        else
-        {
-
-        }
+        $cell->save();
     }
 
 }

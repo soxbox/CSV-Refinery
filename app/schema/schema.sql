@@ -1,12 +1,4 @@
-/*CREATE TABLE `Filter` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `filterDefinitionId` int unsigned NOT NULL,
-  `fileColumnId` int unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (fileColumnId) REFERENCES FileColumn(id)
-);
-
-CREATE TABLE `FilterAttribute` (
+/*CREATE TABLE `FilterAttribute` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `filterId` int unsigned NOT NULL,
   `filterAttributeDefinitionId` int unsigned NOT NULL,
@@ -14,6 +6,13 @@ CREATE TABLE `FilterAttribute` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (filterId) REFERENCES Filter(id)
 );*/
+
+CREATE TABLE `Filter` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(4096),
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `File` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -41,9 +40,10 @@ CREATE TABLE `FileColumn` (
   `columnNumber` int unsigned NOT NULL,
   `originalName` varchar(128),
   `name` varchar(128),
-  `filter` varchar(128),
+  `filterId` int unsigned,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (fileId) REFERENCES File(id)
+  FOREIGN KEY (fileId) REFERENCES File(id),
+  FOREIGN KEY (filterId) REFERENCES Filter(id)
 );
 
 CREATE TABLE `FileCell` (
@@ -60,3 +60,10 @@ CREATE TABLE `FileCell` (
   FOREIGN KEY (fileColumnId) REFERENCES FileColumn(id),
   FOREIGN KEY (fileRowId) REFERENCES FileRow(id)
 );
+
+INSERT INTO `Filter`(`id`, `name`) VALUES (1,'Phone Number');
+INSERT INTO `Filter`(`id`, `name`) VALUES (2,'Name');
+INSERT INTO `Filter`(`id`, `name`) VALUES (3,'Full Name');
+INSERT INTO `Filter`(`id`, `name`) VALUES (4,'Address Line');
+INSERT INTO `Filter`(`id`, `name`) VALUES (5,'State Abbreviation');
+INSERT INTO `Filter`(`id`, `name`) VALUES (6,'Postal Code');

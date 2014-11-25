@@ -11,8 +11,11 @@
     {{ form('datacleaning/applyfilter/' ~ columnToClean.column.id, 'method': 'post') }}
         <p>
             <label>Filter:</label>
-            <select>
-                <option>Phone Number</option>
+            <select id="filterId" name="filterId">
+                <option value=""{{ (columnToClean.column.filterId is empty) ? ' selected' : '' }}>Select a Filter</option>
+                {% for thefilter in filters %}
+                    <option value="{{ thefilter.id }}"{{ (columnToClean.column.filterId is empty) ? '' : (columnToClean.column.filterId == thefilter.id ? ' selected' : '') }}>{{ thefilter.name }}</option>
+                {% endfor %}
             </select>
             <label>Validator:</label> Phone Number Validator
         </p>

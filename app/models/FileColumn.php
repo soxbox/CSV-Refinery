@@ -37,9 +37,9 @@ class FileColumn extends ModelBase
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $filter;
+    public $filterId;
 
     /**
      * Initialize method for model.
@@ -56,6 +56,9 @@ class FileColumn extends ModelBase
         $this->belongsTo('fileId', "File", "id", array(
             'alias' => 'File'
         ));
+        $this->hasOne('filterId', 'Filter', 'id', array(
+            'alias' => 'Filter'
+        ));
     }
 
     /**
@@ -68,7 +71,7 @@ class FileColumn extends ModelBase
             'fileId' => 'fileId', 
             'columnNumber' => 'columnNumber', 
             'originalName' => 'originalName',
-            'filter' => 'filter',
+            'filterId' => 'filterId',
             'name' => 'name'
         );
     }
