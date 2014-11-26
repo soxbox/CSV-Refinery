@@ -15,3 +15,11 @@ API:
 /api/columns/applyFilter/:columnId (POST)
 /api/cells/overrideValue/:cellId (POST)
 /api/cells/approve/:cellId (POST)
+
+
+API return values:
+{
+    status: "ok/error",
+    errors: [{ errorTypeId: 2, message: "this is an error" }],
+    result: {}
+}

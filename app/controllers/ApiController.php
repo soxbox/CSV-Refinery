@@ -22,5 +22,10 @@ class ApiController extends ControllerBase
         $response->setJsonContent($data);
         return $response;
     }
+
+    protected function getJsonResponse($data, $errors)
+    {
+
+    }
 }
 
