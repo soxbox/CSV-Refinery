@@ -13,19 +13,8 @@ class ApiController extends ControllerBase
                 'description' => $filter->description
             );
         }
-//        $this->setJsonResponse();
-//        return $data;
 
-
-        $this->view->disable();
-        $response = new Phalcon\Http\Response();
-        $response->setJsonContent($data);
-        return $response;
-    }
-
-    protected function getJsonResponse($data, $errors)
-    {
-
+        return $this->getOkJsonResponse($data);
     }
 }
 

@@ -12,11 +12,7 @@ class DataCleaningController extends ControllerBase
             )
         );
 
-        $this->view->disable();
-
-        // Getting a response instance
-        $response = new \Phalcon\Http\Response();
-        return $response->redirect("datacleaning/column/" . $firstColumn->id);
+        return $this->getRedirectResponse("datacleaning/column/" . $firstColumn->id);
     }
 
     public function columnAction($columnId)
@@ -39,11 +35,7 @@ class DataCleaningController extends ControllerBase
             $this->applyFilterToCell($cell);
         }
 
-        $this->view->disable();
-
-        // Getting a response instance
-        $response = new \Phalcon\Http\Response();
-        return $response->redirect("datacleaning/column/" . $columnId);
+        return $this->getRedirectResponse("datacleaning/column/" . $columnId);
     }
 
     private function getColumnData($columnId)

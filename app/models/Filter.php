@@ -5,6 +5,12 @@ use Phalcon\Mvc\Model\Relation;
 
 class Filter extends ModelBase
 {
+    const PHONE_NUMBER_FILTER_ID = 1;
+    const NAME_FILTER_ID = 2;
+    const FULL_NAME_FILTER_ID = 3;
+    const ADDRESS_LINE_FILTER_ID = 4;
+    const STATE_ABBREVIATION_FILTER_ID = 5;
+    const POSTAL_CODE_FILTER_ID = 6;
 
     /**
      *
@@ -40,11 +46,4 @@ class Filter extends ModelBase
             'description' => 'description'
         );
     }
-
-    const PHONE_NUMBER_FILTER_ID = 1;
-    const NAME_FILTER_ID = 2;
-    const FULL_NAME_FILTER_ID = 3;
-    const ADDRESS_LINE_FILTER_ID = 4;
-    const STATE_ABBREVIATION_FILTER_ID = 5;
-    const POSTAL_CODE_FILTER_ID = 6;
 }

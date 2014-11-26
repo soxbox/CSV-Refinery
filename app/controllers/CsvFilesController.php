@@ -18,11 +18,7 @@ class CsvFilesController extends ControllerBase
 
             }
             else {
-                $this->view->disable();
-
-                // Getting a response instance
-                $response = new \Phalcon\Http\Response();
-                return $response->redirect("csvfiles/view/" . $file->id);
+                return $this->getRedirectResponse("csvfiles/view/" . $file->id);
             }
         }
     }
@@ -63,12 +59,7 @@ class CsvFilesController extends ControllerBase
             }
         }
 
-
-        $this->view->disable();
-
-        // Getting a response instance
-        $response = new \Phalcon\Http\Response();
-        return $response->redirect("csvfiles/view/" . $file->id);
+        return $this->getRedirectResponse("csvfiles/view/" . $file->id);
 
 
 //        if ($row->save() == false)
@@ -102,9 +93,7 @@ class CsvFilesController extends ControllerBase
             $file->delete();
         }
 
-        $this->view->disable();
-        $response = new \Phalcon\Http\Response();
-        return $response->redirect("csvfiles/index/");
+        return $this->getRedirectResponse("csvfiles/index/");
     }
 
     private function saveUploadedFile()

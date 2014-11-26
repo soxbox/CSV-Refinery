@@ -5,38 +5,75 @@ use Phalcon\Mvc\Model;
 
 class ControllerBase extends Controller
 {
-    protected function appendErrorMessages($entity)
+    private $errors;
+
+    public function initialize()
     {
-        foreach ($entity->getMessages() as $error)
-        {
-            array_push($this->view->errors, $error);
+        $this->errors = array();
+    }
+
+/*    public function beforeExecuteRoute($dispatcher)
+    {
+        return true;
+    }*/
+
+    public function afterExecuteRoute($dispatcher)
+    {
+        if (!$this->view->isDisabled) {
+            $this->view->errors = $this->errors;
         }
+    }
+
+    protected function appendErrors($errors)
+    {
+        Error::appendErrorsToArray($this->errors, $errors);
+    }
+
+    protected function appendErrorsFromEntity($entity)
+    {
+        $entity->appendErrorsToArray($this->errors);
     }
 
     protected function hasErrors()
     {
-        return count($this->view->errors) > 0;
+        return empty($this->errors) == false;
     }
 
-/*    protected $_isJsonResponse = false;
+    protected function getRedirectResponse($url, $ignoreErrors = false)
+    {
+        if (!$this->hasErrors()
+            || ($this->hasErrors()
+                && $ignoreErrors == true)) {
 
-    // Call this func to set json response enabled
-    public function setJsonResponse() {
-        $this->view->disable();
-
-        $this->_isJsonResponse = true;
-        $this->response->setContentType('application/json', 'UTF-8');
-    }
-
-    // After route executed event
-    public function afterExecuteRoute(\Phalcon\Mvc\Dispatcher $dispatcher) {
-        if ($this->_isJsonResponse) {
-            $data = $dispatcher->getReturnedValue();
-            if (is_array($data)) {
-                $data = json_encode($data);
-            }
-
-            $this->response->setContent($data);
+            $this->view->disable();
+            $response = new \Phalcon\Http\Response();
+            return $response->redirect($url);
         }
-    }*/
+    }
+
+    protected function getOkJsonResponse($data, $additionalErrors = null)
+    {
+        return $this->getJsonResponse(JsonStatus::ok(), $data, $additionalErrors);
+    }
+    protected function getErrorJsonResponse($data, $additionalErrors = null)
+    {
+        return $this->getJsonResponse(JsonStatus::error(), $data, $additionalErrors);
+    }
+
+    private function getJsonResponse($jsonStatus, $data, $additionalErrors = null)
+    {
+        $this->appendErrors($additionalErrors);
+
+        $this->view->disable();
+        $returnValue = new JsonReturnValue();
+        $returnValue->status = $jsonStatus;
+        if ($this->hasErrors())
+        {
+            $returnValue->errors = $this->errors;
+        }
+        $returnValue->result = $data;
+        $response = new Phalcon\Http\Response();
+        $response->setJsonContent($returnValue);
+        return $response;
+    }
 }
