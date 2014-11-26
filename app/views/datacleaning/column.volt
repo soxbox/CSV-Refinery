@@ -1,26 +1,36 @@
-<div ng-controller="CleanColumnCtrl" ng-init="init()">
+
+<div ng-controller="CleanColumnController" ng-init="init()">
+    <div class="alert alert-warning alert-dismissable" ng-show="Error != null">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ Error }}
+    </div>
+
+    <select ng-model="Filter">
+        <option ng-repeat="filter in Filters" value="{{ filter.id }}">{{ filter.name }}</option>
+    </select>
+
     {% if (not(columnToClean.previousColumnId is empty)) %}
-        {{ link_to("datacleaning/column/" ~ columnToClean.previousColumnId, "Previous") }}
+        [[ link_to("datacleaning/column/" ~ columnToClean.previousColumnId, "Previous") ]]
     {% endif %}
-    <h1>Column # {{ columnToClean.column.columnNumber }} - "<span>{{ not(columnToClean.column.name is empty) ? columnToClean.column.name : columnToClean.column.originalName }}</span>"</h1>
+    <h1>Column # [[ columnToClean.column.columnNumber ]] - "<span>[[ not(columnToClean.column.name is empty) ? columnToClean.column.name : columnToClean.column.originalName ]]</span>"</h1>
     {% if (not(columnToClean.nextColumnId is empty)) %}
-        {{ link_to("datacleaning/column/" ~ columnToClean.nextColumnId, "Next") }}
+        [[ link_to("datacleaning/column/" ~ columnToClean.nextColumnId, "Next") ]]
     {% endif %}
 
 
-    {{ form('datacleaning/applyfilter/' ~ columnToClean.column.id, 'method': 'post') }}
+    [[ form('datacleaning/applyfilter/' ~ columnToClean.column.id, 'method': 'post') ]]
         <p>
             <label>Filter:</label>
             <select id="filterId" name="filterId">
-                <option value=""{{ (columnToClean.column.filterId is empty) ? ' selected' : '' }}>Select a Filter</option>
+                <option value=""[[ (columnToClean.column.filterId is empty) ? ' selected' : '' ]]>Select a Filter</option>
                 {% for thefilter in filters %}
-                    <option value="{{ thefilter.id }}"{{ (columnToClean.column.filterId is empty) ? '' : (columnToClean.column.filterId == thefilter.id ? ' selected' : '') }}>{{ thefilter.name }}</option>
+                    <option value="[[ thefilter.id ]]"[[ (columnToClean.column.filterId is empty) ? '' : (columnToClean.column.filterId == thefilter.id ? ' selected' : '') ]]>[[ thefilter.name ]]</option>
                 {% endfor %}
             </select>
             <label>Validator:</label> Phone Number Validator
         </p>
 
-        {{ submit_button('Apply Filter') }}
+    [[ submit_button('Apply Filter') ]]
 
         <table>
             <tr>
@@ -31,10 +41,10 @@
             </tr>
             {% for cell in columnToClean.column.cells %}
                 <tr>
-                    <td>{{ cell.getRow().rowNumber }}</td>
-                    <td>{{ cell.originalValue }}</td>
+                    <td>[[ cell.getRow().rowNumber ]]</td>
+                    <td>[[ cell.originalValue ]]</td>
                     <td></td>
-                    <td>{{ cell.value }}</td>
+                    <td>[[ cell.value ]]</td>
                 </tr>
             {% endfor %}
         </table>

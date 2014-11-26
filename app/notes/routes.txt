@@ -1,0 +1,17 @@
+Pages (all GET):
+/
+/upload
+/view/:fileId
+/clean/:columnId
+
+API:
+/api/filters (GET)
+/api/jobs/status/:jobId (GET)
+/api/files/upload (POST/PUT)
+/api/files/delete/:fileId (DELETE)
+/api/files/toggleHeaderRow/:fileId (POST)
+/api/columns/view/:columnId (GET)
+/api/columns/edit/:columnId (POST)
+/api/columns/applyFilter/:columnId (POST)
+/api/cells/overrideValue/:cellId (POST)
+/api/cells/approve/:cellId (POST)

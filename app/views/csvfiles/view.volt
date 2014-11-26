@@ -1,18 +1,18 @@
 <h1>View File</h1>
 <ul>
-    <li>Id: {{ file.id }}</li>
-    <li>Name: {{ file.name }}</li>
-    <li>Uploaded: {{ file.uploadDate }}</li>
+    <li>Id: [[ file.id ]]</li>
+    <li>Name: [[ file.name ]]</li>
+    <li>Uploaded: [[ file.uploadDate ]]</li>
     <li>
-        Has Header Row: {{ file.hasHeaderRow ? 'true' : 'false' }}
-        {{ form('csvfiles/toggleHeaderRow/' ~ file.id, 'method': 'post') }}
-            {{ submit_button(file.hasHeaderRow ? 'Remove Header Row' : 'Use Fisrt Row as Header') }}
+        Has Header Row: [[ file.hasHeaderRow ? 'true' : 'false' ]]
+        [[ form('csvfiles/toggleHeaderRow/' ~ file.id, 'method': 'post') ]]
+        [[ submit_button(file.hasHeaderRow ? 'Remove Header Row' : 'Use Fisrt Row as Header') ]]
         </form>
     </li>
-    <li>Original Row Count: {{ file.originalRowCount }}</li>
-    <li>Original Column Count: {{ file.originalColumnCount }}</li>
+    <li>Original Row Count: [[ file.originalRowCount ]]</li>
+    <li>Original Column Count: [[ file.originalColumnCount ]]</li>
 </ul>
-<p>{{ link_to("datacleaning/index/" ~ file.id, "Clean Data") }}</p>
+<p>[[ link_to("datacleaning/index/" ~ file.id, "Clean Data") ]]</p>
 
 <h2>Rows</h2>
 <table>
@@ -24,10 +24,10 @@
     </tr>
     {% for row in file.rows %}
         <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.rowNumber }}</td>
-            <td>{{ row.isHeaderRow ? 'true' : 'false' }}</td>
-            <td>{{ row.skipInOutput ? 'true' : 'false' }}</td>
+            <td>[[ row.id ]]</td>
+            <td>[[ row.rowNumber ]]</td>
+            <td>[[ row.isHeaderRow ? 'true' : 'false' ]]</td>
+            <td>[[ row.skipInOutput ? 'true' : 'false' ]]</td>
         </tr>
     {% endfor %}
 </table>
@@ -42,10 +42,10 @@
     </tr>
     {% for column in file.columns %}
         <tr>
-            <td>{{ column.id }}</td>
-            <td>{{ column.columnNumber }}</td>
-            <td>{{ column.originalName }}</td>
-            <td>{{ column.name }}</td>
+            <td>[[ column.id ]]</td>
+            <td>[[ column.columnNumber ]]</td>
+            <td>[[ column.originalName ]]</td>
+            <td>[[ column.name ]]</td>
         </tr>
     {% endfor %}
 </table>
@@ -61,15 +61,15 @@
     </tr>
     {% for cell in file.cells %}
         <tr>
-            <td>{{ cell.id }}</td>
-            <td>{{ cell.getColumn().columnNumber }}</td>
-            <td>{{ cell.getRow().rowNumber }}</td>
-            <td>{{ cell.originalValue }}</td>
-            <td>{{ cell.value }}</td>
+            <td>[[ cell.id ]]</td>
+            <td>[[ cell.getColumn().columnNumber ]]</td>
+            <td>[[ cell.getRow().rowNumber ]]</td>
+            <td>[[ cell.originalValue ]]</td>
+            <td>[[ cell.value ]]</td>
         </tr>
     {% endfor %}
 </table>
 
 <p>
-    {{  link_to("csvfiles", "All Files") }}
+    [[  link_to("csvfiles", "All Files") ]]
 </p>
