@@ -53,7 +53,7 @@ class FileRow extends ModelBase
     public function initialize()
     {
         $this->setSource('FileRow');
-        $this->hasMany('id', "FileCell", "fileRowId", array(
+/*        $this->hasMany('id', "FileCell", "fileRowId", array(
             'alias' => 'Cells',
             'foreignKey' => array(
                 'action' => Relation::ACTION_CASCADE
@@ -61,7 +61,7 @@ class FileRow extends ModelBase
         ));
         $this->belongsTo('fileId', "File", "id", array(
             'alias' => 'File'
-        ));
+        ));*/
     }
 
     /**

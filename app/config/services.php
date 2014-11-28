@@ -36,7 +36,7 @@ $di->set('view', function () use ($config) {
         '.volt' => function ($view, $di) use ($config) {
 
             //$volt = new VoltEngine($view, $di);
-            $volt = new LiveVolt($view, $di);
+            $volt = new CustomVoltEngine($view, $di);
 
             $volt->setOptions(array(
                 'compiledPath' => $config->application->cacheDir,
@@ -80,55 +80,34 @@ $di->set('session', function () {
     return $session;
 });
 
-/*// Create the router
-$router = new \Phalcon\Mvc\Router();
+$di->set('router', function() {
 
-//Define a route
-$router->add(
-    "/datacleaning/:int/:action/:int",
-    array(
-        "controller" => "DataCleaning",
-        "action"     => 2,
-        "fileId"     => 1,
-        "columnId"     => 3,
-    )
-);*/
+    //Use the annotations router
+    $router = new \Phalcon\Mvc\Router\Annotations(false);
 
-class LiveVolt extends \Phalcon\Mvc\View\Engine\Volt
-{
-    public function getCompiler()
-    {
-        if (empty($this->_compiler))
-        {
-            $this->_compiler = new LiveVoltCompiler($this->getView());
-            $this->_compiler->setOptions($this->getOptions());
-            $this->_compiler->setDI($this->getDI());
-        }
+    // Always read the annotations from IndexController
+    $router->addResource('Index');
+    // api routes
+    $router->addResource('CellsApi', '/api/cells');
+    $router->addResource('ColumnsApi', '/api/columns');
+    $router->addResource('FilesApi', '/api/files');
+    $router->addResource('JobsApi', '/api/jobs');
+    $router->addResource('FilterDefinitionsApi', '/api/filterdefinitions');
 
-        return $this->_compiler;
-    }
-}
+//    $router->add(
+//        "/:controller/:action/:params",
+//        array(
+//            "controller" => 1,
+//            "action"     => 2,
+//            "params" => 3
+//        )
+//    );
 
-class LiveVoltCompiler extends \Phalcon\Mvc\View\Engine\Volt\Compiler
-{
-    protected function _compileSource($source, $something = null)
-    {
-        $source = str_replace('{{', '<' . '?php $ng = <<<NG' . "\n" . '\x7B\x7B', $source);
-        $source = str_replace('}}', '\x7D\x7D' . "\n" . 'NG;' . "\n" . ' echo $ng; ?' . '>', $source);
+    //Set 404 paths
+    $router->notFound(array(
+        "controller" => "index",
+        "action" => "notFound"
+    ));
 
-        $source = str_replace('[[', '{{', $source);
-        $source = str_replace(']]', '}}', $source);
-
-        return parent::_compileSource($source, $something);
-    }
-}
-
-//$di->setShared('volt', function($view, $di) {
-//
-//    $volt = new LiveVolt($view, $di);
-//
-//    //$volt->setSkinPath('my/alternative/dir/');
-//
-//    return $volt;
-//});
-
+    return $router;
+});

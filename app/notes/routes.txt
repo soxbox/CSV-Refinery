@@ -1,25 +1,30 @@
 Pages (all GET):
-/
-/upload
-/view/:fileId
-/clean/:columnId
+/                   - list of files
+/upload             - upload a new file
+/view/:fileId       - view the file details
+/clean/:columnId    - clean the file
 
 API:
-/api/filters (GET)
-/api/jobs/status/:jobId (GET)
-/api/files/upload (POST/PUT)
-/api/files/delete/:fileId (DELETE)
-/api/files/toggleHeaderRow/:fileId (POST)
-/api/columns/view/:columnId (GET)
-/api/columns/edit/:columnId (POST)
-/api/columns/applyFilter/:columnId (POST)
-/api/cells/overrideValue/:cellId (POST)
-/api/cells/approve/:cellId (POST)
+in general, the api looks like:
+/api/entities (GET) - query
+/api/entities (POST) - add
+/api/entities/:id (GET) - get
+/api/entities/:id (POST) - update
+/api/entities/:id (DELETE) - delete
+(Not all the API controllers support every method)
 
-
-API return values:
+API return values for queries: array of entity
+API return values for gets: single entity
+API return values for posts
 {
     status: "ok/error",
     errors: [{ errorTypeId: 2, message: "this is an error" }],
     result: {}
 }
+
+In addition, we'll have:
+/api/files/:id/toggleHeaderRow (POST)
+/api/columns/:id/applyFilter (POST)
+/api/cells/:id/overrideValue (POST)
+/api/cells/:id/approve (POST)
+

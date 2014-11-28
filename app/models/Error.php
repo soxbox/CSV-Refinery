@@ -17,8 +17,9 @@ class Error
         return new Error(Error::GENERAL_ERROR_TYPE_ID, $message);
     }
 
-    public static function appendErrorsToArray(&$array, $errors)
+    public static function getArrayOfErrors($errors)
     {
+        $array = array();
         if (!is_null($errors))
         {
             if (is_array($errors)
@@ -45,6 +46,16 @@ class Error
             {
                 array_push($array, Error::general($errors));
             }
+        }
+        return $array;
+    }
+
+    public static function appendErrorsToArray(&$array, $errors)
+    {
+        $newErrors = Error::getArrayOfErrors($errors);
+        foreach ($newErrors as $error)
+        {
+            array_push($array, $error);
         }
     }
 }

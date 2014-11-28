@@ -7,7 +7,7 @@
   FOREIGN KEY (filterId) REFERENCES Filter(id)
 );*/
 
-CREATE TABLE `Filter` (
+CREATE TABLE `FilterDefinition` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `description` varchar(4096),
@@ -40,10 +40,10 @@ CREATE TABLE `FileColumn` (
   `columnNumber` int unsigned NOT NULL,
   `originalName` varchar(128),
   `name` varchar(128),
-  `filterId` int unsigned,
+  `filterDefinitionId` int unsigned,
   PRIMARY KEY (`id`),
   FOREIGN KEY (fileId) REFERENCES File(id),
-  FOREIGN KEY (filterId) REFERENCES Filter(id)
+  FOREIGN KEY (filterDefinitionId) REFERENCES FilterDefinition(id)
 );
 
 CREATE TABLE `FileCell` (
@@ -61,9 +61,9 @@ CREATE TABLE `FileCell` (
   FOREIGN KEY (fileRowId) REFERENCES FileRow(id)
 );
 
-INSERT INTO `Filter`(`id`, `name`) VALUES (1,'Phone Number');
-INSERT INTO `Filter`(`id`, `name`) VALUES (2,'Name');
-INSERT INTO `Filter`(`id`, `name`) VALUES (3,'Full Name');
-INSERT INTO `Filter`(`id`, `name`) VALUES (4,'Address Line');
-INSERT INTO `Filter`(`id`, `name`) VALUES (5,'State Abbreviation');
-INSERT INTO `Filter`(`id`, `name`) VALUES (6,'Postal Code');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (1,'Phone Number');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (2,'Name');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (3,'Full Name');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (4,'Address Line');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (5,'State Abbreviation');
+INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (6,'Postal Code');

@@ -39,7 +39,7 @@ class FileColumn extends ModelBase
      *
      * @var integer
      */
-    public $filterId;
+    public $filterDefinitionId;
 
     /**
      * Initialize method for model.
@@ -47,7 +47,7 @@ class FileColumn extends ModelBase
     public function initialize()
     {
         $this->setSource('FileColumn');
-        $this->hasMany('id', "FileCell", "fileColumnId", array(
+/*        $this->hasMany('id', "FileCell", "fileColumnId", array(
             'alias' => 'Cells',
             'foreignKey' => array(
                 'action' => Relation::ACTION_CASCADE
@@ -55,9 +55,9 @@ class FileColumn extends ModelBase
         ));
         $this->belongsTo('fileId', "File", "id", array(
             'alias' => 'File'
-        ));
-        $this->hasOne('filterId', 'Filter', 'id', array(
-            'alias' => 'Filter'
+        ));*/
+        $this->hasOne('filterDefinitionId', 'FilterDefinition', 'id', array(
+            'alias' => 'FilterDefinition'
         ));
     }
 

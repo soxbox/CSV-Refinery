@@ -1,6 +1,6 @@
 <?php
 
-class JsonStatus
+class ApiStatus
 {
     const OK_ID = 0;
     const OK_DESCRIPTION = "ok";
@@ -9,12 +9,12 @@ class JsonStatus
 
     public static function error()
     {
-        return new JsonStatus(JsonStatus::ERROR_ID, JsonStatus::ERROR_DESCRIPTION);
+        return new ApiStatus(ApiStatus::ERROR_ID, ApiStatus::ERROR_DESCRIPTION);
     }
 
     public static function ok()
     {
-        return new JsonStatus(JsonStatus::OK_ID, JsonStatus::OK_DESCRIPTION);
+        return new ApiStatus(ApiStatus::OK_ID, ApiStatus::OK_DESCRIPTION);
     }
 
     private function __construct($id, $description) {

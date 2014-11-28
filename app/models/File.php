@@ -41,6 +41,18 @@ class File extends ModelBase
      */
     public $originalRowCount;
 
+    public function toArrayOfValues()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'uploadDate' => $this->uploadDate,
+            'hasHeaderRow' => $this->hasHeaderRow,
+            'originalColumnCount' => $this->originalColumnCount,
+            'originalRowCount' => $this->originalRowCount
+        );
+    }
+
     public function beforeSave()
     {
         $this->hasHeaderRow = ($this->hasHeaderRow == true) ? 1 : 0;
@@ -57,7 +69,7 @@ class File extends ModelBase
     public function initialize()
     {
         $this->setSource('File');
-        $this->hasMany('id', "FileRow", "fileId", array(
+/*        $this->hasMany('id', "FileRow", "fileId", array(
             'alias' => 'Rows',
             'foreignKey' => array(
                 'action' => Relation::ACTION_CASCADE
@@ -74,7 +86,7 @@ class File extends ModelBase
             'foreignKey' => array(
                 'action' => Relation::ACTION_CASCADE
             )
-        ));
+        ));*/
     }
 
     /**

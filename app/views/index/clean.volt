@@ -10,15 +10,15 @@
     </select>
 
     {% if (not(columnToClean.previousColumnId is empty)) %}
-        [[ link_to("datacleaning/column/" ~ columnToClean.previousColumnId, "Previous") ]]
+        [[ link_to("clean/" ~ columnToClean.previousColumnId, "Previous") ]]
     {% endif %}
     <h1>Column # [[ columnToClean.column.columnNumber ]] - "<span>[[ not(columnToClean.column.name is empty) ? columnToClean.column.name : columnToClean.column.originalName ]]</span>"</h1>
     {% if (not(columnToClean.nextColumnId is empty)) %}
-        [[ link_to("datacleaning/column/" ~ columnToClean.nextColumnId, "Next") ]]
+        [[ link_to("clean/" ~ columnToClean.nextColumnId, "Next") ]]
     {% endif %}
 
 
-    [[ form('datacleaning/applyfilter/' ~ columnToClean.column.id, 'method': 'post') ]]
+    [[ form('api/columns/applyfilter/' ~ columnToClean.column.id, 'method': 'post') ]]
         <p>
             <label>Filter:</label>
             <select id="filterId" name="filterId">
@@ -50,3 +50,4 @@
         </table>
     </form>
 </div>
+[[ javascript_include("js/custom/angular/controllers/CleanColumnController.js") ]]

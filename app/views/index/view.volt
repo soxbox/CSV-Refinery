@@ -5,14 +5,14 @@
     <li>Uploaded: [[ file.uploadDate ]]</li>
     <li>
         Has Header Row: [[ file.hasHeaderRow ? 'true' : 'false' ]]
-        [[ form('csvfiles/toggleHeaderRow/' ~ file.id, 'method': 'post') ]]
+        [[ form('toggleHeaderRow/' ~ file.id, 'method': 'post') ]]
         [[ submit_button(file.hasHeaderRow ? 'Remove Header Row' : 'Use Fisrt Row as Header') ]]
         </form>
     </li>
     <li>Original Row Count: [[ file.originalRowCount ]]</li>
     <li>Original Column Count: [[ file.originalColumnCount ]]</li>
 </ul>
-<p>[[ link_to("datacleaning/index/" ~ file.id, "Clean Data") ]]</p>
+<p>[[ link_to("clean/" ~ firstColumnId, "Clean Data") ]]</p>
 
 <h2>Rows</h2>
 <table>
@@ -71,5 +71,5 @@
 </table>
 
 <p>
-    [[  link_to("csvfiles", "All Files") ]]
+    [[  link_to("", "All Files") ]]
 </p>

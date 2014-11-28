@@ -69,7 +69,7 @@ class FileCell extends ModelBase
     public function initialize()
     {
         $this->setSource('FileCell');
-        $this->belongsTo('fileId', "File", "id", array(
+/*        $this->belongsTo('fileId', "File", "id", array(
             'alias' => 'File'
         ));
         $this->belongsTo('fileColumnId', "FileColumn", "id", array(
@@ -77,7 +77,7 @@ class FileCell extends ModelBase
         ));
         $this->belongsTo('fileRowId', "FileRow", "id", array(
             'alias' => 'Row'
-        ));
+        ));*/
     }
 
     /**
