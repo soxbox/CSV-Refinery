@@ -9,7 +9,7 @@ class FileUploadHandler
         return $this->errors;
     }
 
-    public function saveUploadedFile($request)
+    public function saveUploadedFile($request, $job)
     {
         $file = null;
         if ($request->hasFiles() == true)

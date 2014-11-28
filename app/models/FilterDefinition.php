@@ -30,7 +30,7 @@ class FilterDefinition extends ModelBase
      */
     public $description;
 
-    public function toArray()
+    public function toArrayOfValues()
     {
         return array(
             'id' => $this->id,

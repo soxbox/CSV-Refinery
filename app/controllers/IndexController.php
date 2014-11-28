@@ -7,26 +7,17 @@ class IndexController extends ControllerBase
         $this->response->setHeader('HTTP/1.0 404','Not Found');
     }
 
-    public function asyncAction()
-    {
-        $this->view->disable();
-        ob_end_clean();
-        header("Connection: close");
-        ignore_user_abort(); // optional
-        ob_start();
-        echo ('Text the user will see');
-        $size = ob_get_length();
-        header("Content-Length: $size");
-        ob_end_flush();     // Will not work
-        flush();            // Unless both are called !
-
-        // At this point, the browser has closed connection to the web server
-
-        // Do processing here
-        include('/../../app/custom/longThing.php');
-
-        echo('Text user will never see');
-    }
+//    /**
+//     * @Get("/asynctest")
+//     */
+//    public function asyncAction()
+//    {
+//        $job = Job::start();
+//        $this->appendErrors($job->getErrors());
+//        $this->closeConnectionNowAndContinueProcessing("show this to the user");//, "/csvrefinery/?jobId=" . $job->id);
+//
+//        sleep(10);
+//    }
 
     /**
      * @Route("/", methods={"POST", "GET"})
@@ -35,9 +26,21 @@ class IndexController extends ControllerBase
     {
         if ($this->request->isPost())
         {
+            // the post handles the file upload which is a long-running process
+
+            $job = Job::start();
+            $this->appendErrors($job->getErrors());
+
+            // TODO: pass it the job url
+
+            // TODO: this should either redirect OR the upload should be ajax and this should pass back job info
+            // TODO: fix urls
+            $this->closeConnectionNowAndContinueProcessing("show this to the user");//, "/csvrefinery/?jobId=" . $job->id);
+
+            // TODO: refactor to use the job to append progress updates to it
             // do an upload
             $handler = new FileUploadHandler();
-            $handler->saveUploadedFile($this->request);
+            $handler->saveUploadedFile($this->request, $job);
             $this->appendErrors($handler->getErrors());
         }
         $this->view->files = File::find();

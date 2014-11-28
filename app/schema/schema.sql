@@ -61,9 +61,26 @@ CREATE TABLE `FileCell` (
   FOREIGN KEY (fileRowId) REFERENCES FileRow(id)
 );
 
+CREATE TABLE `JobStatus` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Job` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `statusId` int unsigned NOT NULL,
+  `progressDescription` text,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (statusId) REFERENCES JobStatus(id)
+);
+
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (1,'Phone Number');
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (2,'Name');
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (3,'Full Name');
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (4,'Address Line');
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (5,'State Abbreviation');
 INSERT INTO `FilterDefinition`(`id`, `name`) VALUES (6,'Postal Code');
+INSERT INTO `JobStatus`(`id`, `name`) VALUES (1,'Processing');
+INSERT INTO `JobStatus`(`id`, `name`) VALUES (2,'Complete: Succeeded');
+INSERT INTO `JobStatus`(`id`, `name`) VALUES (3,'Complete: Failed');
